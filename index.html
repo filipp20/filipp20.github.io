@@ -57,6 +57,18 @@
       const playAnimation = () => {
         mixer = new THREE.AnimationMixer(scene);
         const animation = mixer.clipAction(scene.animations[1]);
+
+  animation.play().reset().fadeOut(0.5); // reset animácie a spustenie s efektom zhasínania
+
+  animation.loop = THREE.LoopOnce; // nastavenie animácie tak, aby sa prehrávala len raz
+
+  animation.clampWhenFinished = true; // zastavenie animácie po jej prehratí
+
+  animation.paused = false; // nastavenie animácie ako prehrávanú
+
+  animation.play(); // spustenie animácie
+
+  animation._clip.duration *= 2;
         animation.play();
       };
 
@@ -78,6 +90,7 @@
         // pridaj animaciu do sceny
         const tick = () => {
           const elapsedTime = clock.getElapsedTime();
+          clock.timeScale = 0.5;
           if (mixer) {
             mixer.update(elapsedTime);
           }
