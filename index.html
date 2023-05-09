@@ -55,8 +55,22 @@
       const pauseButton = document.getElementById('pauseButton');
 
       const playAnimation = () => {
-        mixer = new THREE.AnimationMixer(scene);
-        const animation = mixer.clipAction(scene.animations[1]);
+        const playAnimation = () => {
+  mixer = new THREE.AnimationMixer(scene);
+  const animation = mixer.clipAction(scene.animations[1]);
+  animation.play().reset().fadeOut(0.5); // reset animácie a spustenie s efektom zhasínania
+  animation.loop = THREE.LoopOnce; // nastavenie animácie tak, aby sa prehrávala len raz
+  animation.clampWhenFinished = true; // zastavenie animácie po jej prehratí
+  animation.paused = false; // nastavenie animácie ako prehrávanú
+  animation.play(); // spustenie animácie
+  animation._clip.duration *= 2; // zdvojnásobenie trvania animácie
+  animation._mixer.addEventListener('finished', () => {
+    pauseButton.textContent = 'Play'; // zmena stavu tlačidiel Play a Pause
+    playButton.disabled = false;
+    pauseButton.disabled = true;
+  });
+};
+
 
 
 
