@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Hlavy Funak</title>
+    <title>3D Model Hlavy</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.5">
     <style>
@@ -30,8 +30,8 @@
       // scena
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffffff);      
-      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-      camera.position.set(-15, 0, 5);
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 2, 1000);
+      camera.position.set(-25, 0, 5);
 
       // svetlo
       const light = new THREE.AmbientLight(0xffffff, 1.5); 
@@ -40,25 +40,24 @@
       // pohyb
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
-      controls.minDistance = 1.5; 
+      controls.minDistance = 1.2; 
       controls.maxDistance = 15; 
       controls.dampingFactor = 0.05;
       controls.rotateSpeed = 0.5;
       
-      let headObject; // head object
-
+      
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
       loader.load('assets/hlavaglb.glb', function (gltf) {
         scene.add(gltf.scene);
-        headObject = gltf.scene.children[0]; 
+        const object = gltf.scene.children[0]; 
 
         // vytvorenie animacie
-        const animation = new THREE.AnimationMixer(headObject);
+        const animation = new THREE.AnimationMixer(object);
         const clip = gltf.animations[1];
         const action = animation.clipAction(clip);
         action.play();
-        
+
         // pridaj animaciu do sceny
         const clock = new THREE.Clock();
         const tick = () => {
@@ -75,25 +74,14 @@
         switch (event.code) {
           case 'Space':
             controls.autoRotate = !controls.autoRotate;
-            if (headObject) {
-              const headAnimation = new THREE.AnimationMixer(headObject);
-              const headClip = headObject.animations[0];
-              const headAction = headAnimation.clipAction(headClip);
-              headAction.loop = THREE.LoopOnce;
-              headAction.clampWhenFinished = true;
-              headAction.play();
-            }
             break;
         }
       });
 
-      // render
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-      }
-      animate();
-    </script>
-  </body>
-</html>
+      // kliknutie tlacidla
+      const model = document.querySelector('canvas');
+      model.addEventListener('click', function (event) {
+        const object = scene.children[2].children[0].children[0]; // ziskanie objektu hlavy
+        const rotation = object.rotation.y; // ziskanie aktualnej rotacie
+        const targetRotation = rotation + Math.PI / 4; // ziskanie cielovej rotacie
+        const duration = 500; // doba trvania animacie
