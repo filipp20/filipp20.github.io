@@ -1,5 +1,58 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>3D Model Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #canvas {
+        height: 100%;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/@babylonjs/core@5.0.0-alpha.54/babylon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babylonjs/loaders@5.0.0-alpha.54/babylonjs.loaders.min.js"></script>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const engine = new BABYLON.Engine(canvas, true);
+
+      function createScene() {
+        const scene = new BABYLON.Scene(engine);
+        const camera = new BABYLON.ArcRotateCamera('camera', -Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene);
+        camera.attachControl(canvas, true);
+
+        const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), scene);
+
+        BABYLON.SceneLoader.ImportMesh('', 'assets/', 'your_model_filename.gltf', scene, function (newMeshes) {
+          const rootMesh = newMeshes[0];
+          rootMesh.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
+          scene.createDefaultCameraOrLight(true);
+        });
+
+        return scene;
+      }
+
+      const scene = createScene();
+      engine.runRenderLoop(function () {
+        scene.render();
+      });
+      window.addEventListener('resize', function () {
+        engine.resize();
+      });
+    </script>
+  </body>
+</html>
+<!DOCTYPE html>
+<html>
 <head>
 	<title>3D Model Demo</title>
 	<meta charset="utf-8">
