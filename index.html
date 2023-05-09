@@ -32,7 +32,7 @@
 
         const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), scene);
 
-        BABYLON.SceneLoader.ImportMesh('', 'assets/', 'hlava_test.glb', scene, function (newMeshes) {
+        BABYLON.SceneLoader.ImportMesh('', 'assets/', 'hlavaglb.glb', scene, function (newMeshes) {
           const rootMesh = newMeshes[0];
           rootMesh.scaling = new BABYLON.Vector3(10, 10, 10);
           scene.createDefaultCameraOrLight(true);
