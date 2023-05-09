@@ -59,6 +59,7 @@
         const animation = mixer.clipAction(scene.animations[1]);
     const duration = 10; // predĺženie doby prehrávania animácie na 10 sekúnd
     const timeScale = 0.3; // pomalšia rýchlosť prehrávania animácie
+        animation.setLoop(THREE.LoopOnce);
 
         animation.play();
         
