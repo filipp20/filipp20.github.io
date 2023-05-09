@@ -77,6 +77,22 @@
             break;
         }
       });
+      
+      // kliknutie na model
+      let modelClicked = false;
+      window.addEventListener('click', function(event) {
+        if (!modelClicked) {
+          modelClicked = true;
+
+          // otoc model dolava
+          const rotateLeft = new THREE.Matrix4().makeRotationY(Math.PI/4);
+          object.applyMatrix4(rotateLeft);
+          
+          // otoc model doprava
+          const rotateRight = new THREE.Matrix4().makeRotationY(-Math.PI/2);
+          object.applyMatrix4(rotateRight);
+           }
+      });
 
       // render
       function animate() {
