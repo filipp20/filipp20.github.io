@@ -21,6 +21,7 @@
     <button id="playButton">Play</button>
     <button id="pauseButton">Pause</button>
     <script src="https://cdn.jsdelivr.net/npm/three"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script> <!-- OrbitControls -->
     <script>
@@ -94,6 +95,17 @@
             break;
         }
       });
+      // stlačenie tlačidla Play/Pause
+     const pauseButton = document.getElementById('pauseButton');
+     pauseButton.addEventListener('click', function() {
+     if (action.paused) {
+      action.play();
+      pauseButton.textContent = 'Pause';
+  }   else {
+      action.paused = true;
+      pauseButton.textContent = 'Play';
+  }
+});
 
       // render
       function animate() {
