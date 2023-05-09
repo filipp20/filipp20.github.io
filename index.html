@@ -1,111 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>3D Model on Github Pages </title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-
-      canvas {
-        display: block;
-      }
-    </style>
-  </head>
-
-  <body>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.130.1/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three-gltf-loader@1.0.0-beta.13/src/ThreeGLTFLoader.js"></script>
-    <script>
-      let camera, scene, renderer, model, mouseDown = false, mouseX = 0, mouseY = 0;
-
-      function init() {
-        // Create a camera
-        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10);
-        camera.position.z = 1;
-
-        // Create a scene
-        scene = new THREE.Scene();
-
-        // Add a light
-        const light = new THREE.PointLight(0xffffff);
-        light.position.set(1, 1, 1);
-        scene.add(light);
-
-        // Load the model
-        const loader = new THREE.GLTFLoader();
-        loader.load(
-          "assets/hlava_test.gltf",
-          function (gltf) {
-            model = gltf.scene;
-            scene.add(model);
-          },
-          undefined,
-          function (error) {
-            console.error(error);
-          }
-        );
-
-        // Create a renderer
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        // Handle window resize
-        window.addEventListener("resize", onWindowResize);
-
-        // Handle mouse events
-        document.addEventListener("mousedown", onMouseDown);
-        document.addEventListener("mouseup", onMouseUp);
-        document.addEventListener("mousemove", onMouseMove);
-      }
-
-      function animate() {
-        requestAnimationFrame(animate);
-
-        // Rotate the model
-        if (mouseDown) {
-          model.rotation.y += (mouseX - model.rotation.y) * 0.05;
-          model.rotation.x += (mouseY - model.rotation.x) * 0.05;
-        }
-
-        // Render the scene
-        renderer.render(scene, camera);
-      }
-
-      function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }
-
-      function onMouseDown(event) {
-        mouseDown = true;
-        mouseX = event.clientX * 0.5;
-        mouseY = event.clientY * 0.5;
-      }
-
-      function onMouseUp() {
-        mouseDown = false;
-      }
-
-      function onMouseMove(event) {
-        if (mouseDown) {
-          mouseX = event.clientX * 0.5;
-          mouseY = event.clientY * 0.5;
-        }
-      }
-
-      init();
-      animate();
-    </script>
-  </body>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>3D Model Demo</title>
+	<script src="https://cdn.jsdelivr.net/npm/@glTF-Transform/core"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@glTF-Transform/pipeline"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@glTF-Transform/basis"></script>
+	<style>
+		canvas {
+			width: 100%;
+			height: 100%;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script type="module">
+		import { Viewer } from 'https://cdn.skypack.dev/@gltf-transform/viewer';
+		const viewer = new Viewer({canvas: document.querySelector('#canvas')});
+		viewer.expand({cameraControls: {zoomSpeed: 2}});
+		const modelURL = 'assets/hlava_test.gltf';
+		fetch(modelURL)
+			.then((res) => res.arrayBuffer())
+			.then((data) => {
+				const pipeline = new gltfTransform.Pipeline();
+				const glb = pipeline.processGltf(data, [
+					glbToGltf(),
+					prune(),
+					basis(),
+					transform({scale: [0.5, 0.5, 0.5]}),
+				]);
+				viewer.set(glb);
+			});
+	</script>
+</body>
 </html>
+
 
 
 
