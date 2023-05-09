@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Demo</title>
+    <title>3D Model </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -24,34 +24,35 @@
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
-        // create the scene
-  const scene = new THREE.Scene();
 
-  // create the camera
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.set(0, 0, 5);
+      // create the scene
+      const scene = new THREE.Scene();
 
-  // create the lighting
-  const light = new THREE.PointLight(0xffffff, 1, 100);
-  light.position.set(0, 0, 2);
-  scene.add(light);
+      // create the camera
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.set(0, 0, 0);
 
-  // load the model
-  const loader = new THREE.GLTFLoader();
-  loader.load('assets/hlava_test.glb', function (gltf) {
-    scene.add(gltf.scene);
-  });
+      // create the lighting
+      const light = new THREE.PointLight(0xffffff, 1, 100);
+      light.position.set(0, 0, 2);
+      scene.add(light);
 
-  // create the controls
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      // load the model
+      const loader = new THREE.GLTFLoader();
+      loader.load('assets/hlava_test.glb', function (gltf) {
+        scene.add(gltf.scene);
+      });
 
-  // render the scene
-  function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-</script>
+      // add camera controls
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+      // render the scene
+      function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
   </body>
 </html>
+
