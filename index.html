@@ -49,7 +49,7 @@
         document.body.appendChild(renderer.domElement);
 
         let loader = new THREE.GLTFLoader();
-        loader.load('./assets/hlava_test.gltf', function(gltf){
+        loader.load('hlava_test.gltf', function(gltf){
           car = gltf.scene.children[0];
           car.scale.set(0.5,0.5,0.5);
           scene.add(gltf.scene);
