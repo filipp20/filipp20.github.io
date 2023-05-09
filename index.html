@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Demo 3</title>
+    <title>3D Model Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -9,7 +10,7 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: white; 
+        background-color: white; /* zmena pozadia na bielu farbu */
       }
       canvas {
         width: 100%;
@@ -29,7 +30,7 @@
 
       // create the scene
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xffffff);
+      scene.background = new THREE.Color(0xffffff); /* zmena pozadia na bielu farbu */
 
       // create the camera
       const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
@@ -44,17 +45,18 @@
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
       controls.rotateSpeed = 0.5;
-      controls.minDistance = 3.5; 
-      controls.maxDistance = 10;
+      controls.zoomSpeed = 1.2; /* rychlost priblizovania/vzdialovania */
+      controls.enablePan = false; /* zakazat posun */
+      
       // load the model
       const loader = new THREE.GLTFLoader();
-      loader.load('assets/hlavaglb.glb', function (gltf) {
+      loader.load('assets/hlava_test.glb', function (gltf) {
         scene.add(gltf.scene);
         const object = gltf.scene.children[0]; // get the object from the loaded scene
 
         // create the animation
         const animation = new THREE.AnimationMixer(object);
-        const clip = gltf.animations[1];
+        const clip = gltf.animations[0];
         const action = animation.clipAction(clip);
         action.play();
 
