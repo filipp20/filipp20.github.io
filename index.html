@@ -3,7 +3,7 @@
   <head>
     <title>3D Model Hlavy</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       body {
         margin: 0;
@@ -30,8 +30,8 @@
       // scena
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffffff);      
-      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 2, 1000);
-      camera.position.set(-25, 0, 5);
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.set(-5, 0, 5);
 
       // svetlo
       const light = new THREE.AmbientLight(0xffffff, 1.5); 
@@ -40,7 +40,7 @@
       // pohyb
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
-      controls.minDistance = 1.2; 
+      controls.minDistance = 2.5; 
       controls.maxDistance = 15; 
       controls.dampingFactor = 0.05;
       controls.rotateSpeed = 0.5;
@@ -78,10 +78,28 @@
         }
       });
 
-      // kliknutie tlacidla
-      const model = document.querySelector('canvas');
-      model.addEventListener('click', function (event) {
-        const object = scene.children[2].children[0].children[0]; // ziskanie objektu hlavy
-        const rotation = object.rotation.y; // ziskanie aktualnej rotacie
-        const targetRotation = rotation + Math.PI / 4; // ziskanie cielovej rotacie
-        const duration = 500; // doba trvania animacie
+      // kliknutie na model
+      let modelClicked = false;
+      window.addEventListener('click', function(event) {
+        if (!modelClicked) {
+          modelClicked = true;
+
+          // otoc model dolava
+          const rotateLeft = new THREE.Matrix4().makeRotationY(Math.PI/4);
+          object.applyMatrix4(rotateLeft);
+          
+          // otoc model doprava
+          const rotateRight = new THREE.Matrix4().makeRotationY(-Math.PI/2);
+          object.applyMatrix4(rotateRight);
+          
+          // reset po 1 sekunde
+          setTimeout(() => {
+            modelClicked = false;
+            object.rotation.set(0, 0, 0);
+          }, 1000);
+});
+
+</script>
+
+  </body>
+</html>
