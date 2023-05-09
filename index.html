@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Moja stránka s 3D modelom</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-</head>
-<body>
-    <a-scene>
-        <a-assets>
-            <a-asset-item id="model" src="./assets/hlava_test.gltf"></a-asset-item>
-        </a-assets>
-        <a-entity position="0 0 0" scale="1 1 1" rotation="0 180 0" gltf-model="#model"></a-entity>
-        <a-entity position="1 1 1" scale="1 1 1" rotation="0 180 0" camera look-controls></a-entity>
-    </a-scene>
-</body>
+  <head>
+    <title>3D model hlavy</title>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const loader = new THREE.GLTFLoader();
+      loader.load(
+        './assets/hlava_test.gltf',
+        function(gltf) {
+          scene.add(gltf.scene);
+        },
+        undefined,
+        function(error) {
+          console.error(error);
+        }
+      );
+
+      const light = new THREE.AmbientLight(0xffffff, 1);
+      scene.add(light);
+
+      camera.position.z = 5;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
 </html>
+
 
