@@ -57,7 +57,9 @@
       const playAnimation = () => {
         mixer = new THREE.AnimationMixer(scene);
         const animation = mixer.clipAction(scene.animations[1]);
-        animation.setDuration(animation.getClip().duration / 4);
+    const duration = 10; // predĺženie doby prehrávania animácie na 10 sekúnd
+    const timeScale = 0.3; // pomalšia rýchlosť prehrávania animácie
+
         animation.play();
         
       };
