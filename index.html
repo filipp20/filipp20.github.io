@@ -1,49 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>3D model</title>
-    <style>
-       body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333; /* defaultné pozadie */
-        }
-    </style>
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-</head>
-<body>
-    <canvas id="renderCanvas"></canvas>
-    <script>
-        var canvas = document.getElementById("renderCanvas");
-        var engine = new BABYLON.Engine(canvas, true);
-
-        function createScene() {
-            var scene = new BABYLON.Scene(engine);
-
-            BABYLON.SceneLoader.ImportMesh("", "./assets/", "hlava_test.gltf", scene, function () {
-                
-                var camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 20, BABYLON.Vector3.Zero(), scene);
-                camera.attachControl(canvas, true);
-                var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-
-                
-            });
-
-            return scene;
-        }
-
-        var scene = createScene();
-
-        engine.runRenderLoop(function () {
-            scene.render();
-        });
-
-        window.addEventListener("resize", function () {
-            engine.resize();
-        });
-    </script>
-</body>
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-entity gltf-model="./assets/hlava_test.gltf"></a-entity>
+    </a-scene>
+  </body>
 </html>
