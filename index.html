@@ -57,7 +57,7 @@
       const playAnimation = () => {
         mixer = new THREE.AnimationMixer(scene);
         const animation = mixer.clipAction(scene.animations[1]);
-        animation.setDuration(6)
+        animation.setDuration(animation.getClip().duration / 4);
         animation.play();
         
       };
