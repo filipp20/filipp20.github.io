@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
+    <meta charset="utf-8">
+    <title>Moja stránka s 3D modelom</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <a-scene>
-      <a-entity gltf-model="./assets/hlava_test.gltf"></a-entity>
+        <a-assets>
+            <a-asset-item id="model" src="./assets/hlava_test.gltf"></a-asset-item>
+        </a-assets>
+        <a-entity position="0 1.5 -3" scale="0.5 0.5 0.5" rotation="0 180 0" gltf-model="#model"></a-entity>
+        <a-entity position="0 1.5 -3" scale="0.5 0.5 0.5" rotation="0 180 0" camera look-controls></a-entity>
     </a-scene>
-  </body>
+</body>
 </html>
+
