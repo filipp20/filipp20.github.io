@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Hlavy </title>
+    <title>3D Model Hlavy 1 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -18,6 +18,8 @@
     </style>
   </head>
   <body>
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
     <script src="https://cdn.jsdelivr.net/npm/three"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script> <!-- OrbitControls -->
@@ -45,24 +47,39 @@
       controls.dampingFactor = 0.05;
       controls.rotateSpeed = 0.5;
       
-      
+      // animácia
+      let mixer;
+      const clock = new THREE.Clock();
+      const playButton = document.getElementById('playButton');
+      const pauseButton = document.getElementById('pauseButton');
+
+      const playAnimation = () => {
+        mixer = new THREE.AnimationMixer(scene);
+        const animation = mixer.clipAction(scene.animations[0]);
+        animation.play();
+      };
+
+      const pauseAnimation = () => {
+        mixer.stopAllAction();
+      };
+
+      playButton.addEventListener('click', playAnimation);
+      pauseButton.addEventListener('click', pauseAnimation);
+
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
       loader.load('assets/hlava_test.gltf', function (gltf) {
         scene.add(gltf.scene);
-        const object = gltf.scene.children[0]; 
 
-        // vytvorenie animacie
-        const animation = new THREE.AnimationMixer(object);
-        const clip = gltf.animations[1];
-        const action = animation.clipAction(clip);
-        action.play();
+        // ziskanie animacie z modelu
+        scene.animations = gltf.animations;
 
         // pridaj animaciu do sceny
-        const clock = new THREE.Clock();
         const tick = () => {
           const elapsedTime = clock.getElapsedTime();
-          animation.update(elapsedTime);
+          if (mixer) {
+            mixer.update(elapsedTime);
+          }
           renderer.render(scene, camera);
           window.requestAnimationFrame(tick);
         };
@@ -83,8 +100,9 @@
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
-      }
-      animate();
-    </script>
+}
+animate();
+       </script>
   </body>
 </html>
+        
