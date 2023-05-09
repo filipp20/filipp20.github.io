@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>3D Model Demo</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.jsdelivr.net/npm/@glTF-Transform/core"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@glTF-Transform/pipeline"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@glTF-Transform/basis"></script>
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		#canvas {
+			height: 100%;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script type="module">
+		import { Viewer } from 'https://cdn.skypack.dev/@gltf-transform/viewer';
+		const viewer = new Viewer({canvas: document.querySelector('#canvas')});
+		const modelURL = 'assets/hlava_test.gltf';
+		fetch(modelURL)
+			.then((res) => res.arrayBuffer())
+			.then((data) => {
+				const pipeline = new gltfTransform.Pipeline();
+				const glb = pipeline.processGltf(data, [
+					glbToGltf(),
+					prune(),
+					basis(),
+					transform({scale: [0.05, 0.05, 0.05]}),
+				]);
+				viewer.set(glb);
+			});
+	</script>
+</body>
+</html>
