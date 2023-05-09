@@ -1,43 +1,79 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D model hlavy</title>
+    <title>3D Model on GitHub Pages</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+    <script type="module">
+      import * as THREE from 'https://cdn.skypack.dev/three@0.136.0/build/three.module.js';
+      import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/loaders/GLTFLoader.js';
 
-      const loader = new THREE.GLTFLoader();
-      loader.load(
-        './assets/hlava_test.gltf',
-        function(gltf) {
-          scene.add(gltf.scene);
-        },
-        undefined,
-        function(error) {
-          console.error(error);
-        }
-      );
+      let camera, scene, renderer, model;
 
-      const light = new THREE.AmbientLight(0xffffff, 1);
-      scene.add(light);
+      function init() {
+        camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
 
-      camera.position.z = 5;
+        camera.position.z = 5;
+
+        scene = new THREE.Scene();
+
+        const light = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(light);
+
+        const loader = new GLTFLoader();
+
+        loader.load(
+          'assets/hlava_test.gltf',
+          function (gltf) {
+            model = gltf.scene;
+            scene.add(model);
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+          }
+        );
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+      }
 
       function animate() {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
       }
 
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      window.addEventListener('resize', onWindowResize);
+
+      function onKeyPress(event) {
+        switch (event.code) {
+          case 'Space':
+            camera.rotation.y += 0.1;
+            break;
+        }
+      }
+
+      window.addEventListener('keydown', onKeyPress);
+
+      init();
       animate();
     </script>
   </body>
 </html>
+
 
 
