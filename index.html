@@ -40,7 +40,7 @@
       // pohyb
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
-      controls.minDistance = 1.2; 
+      controls.minDistance = 1.5; 
       controls.maxDistance = 15; 
       controls.dampingFactor = 0.05;
       controls.rotateSpeed = 0.5;
@@ -48,7 +48,7 @@
       
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
-      loader.load('assets/hlavaglb.glb', function (gltf) {
+      loader.load('assets/hlava_test.gltf', function (gltf) {
         scene.add(gltf.scene);
         const object = gltf.scene.children[0]; 
 
