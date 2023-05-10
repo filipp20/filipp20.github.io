@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Hlavy  </title>
+    <title>3D Model Hlavy MSAP  </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -57,7 +57,7 @@
       const playAnimation = () => {
         mixer = new THREE.AnimationMixer(scene);
         const animation = mixer.clipAction(scene.animations[1]);
-    const
+    const duration = 10; // predĺženie doby prehrávania animácie na 10 sekúnd
     const timeScale = 0.3; // pomalšia rýchlosť prehrávania animácie
         animation.setLoop(THREE.LoopOnce);
 
@@ -82,7 +82,7 @@
 
         // pridaj animaciu do sceny
         const tick = () => {
-          const elapsedTime = 0.3;
+          const elapsedTime = clock.getElapsedTime();
           if (mixer) {
             mixer.update(elapsedTime);
           }
