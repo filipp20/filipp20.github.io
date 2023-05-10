@@ -59,18 +59,9 @@
       const slowerButton = document.getElementById('slowerButton');     
       
  
-         // rýchlosť animácie
-         let speed = 1;
+       
 
-// funkcia pre zrýchlenie animácie
-function speedUp() {
-  action.timeScale += 0.1;
-}
 
-// funkcia pre spomalenie animácie
-function speedDown() {
- action.timeScale -= 0.1;
-}
       // funkcia na animaciu a jej nastavenie
   const playAnimation = () => {
   mixer = new THREE.AnimationMixer(scene);
@@ -85,7 +76,15 @@ function speedDown() {
         mixer.stopAllAction();
       };
 
-     
+     // funkcia pre zrýchlenie animácie
+     function speedUp() {
+      action.timeScale += 0.1;
+             }
+
+// funkcia pre spomalenie animácie
+function speedDown() {
+   action.timeScale -= 0.1;
+        }
 
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
