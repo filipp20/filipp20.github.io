@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Hlavy MSAP 1 </title>
+    <title>3D Model Hlavy MSAP  </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <style>
@@ -59,15 +59,7 @@
       const pauseButton = document.getElementById('pauseButton');
       const fasterButton = document.getElementById('fasterButton');
       const slowerButton = document.getElementById('slowerButton');     
-      // animacia
-      mixer = new THREE.AnimationMixer(scene);
-      
-      const animation = mixer.clipAction(scene.animations[1]);
-      const timeScale = 1;
- 
-       
-
-
+    
       // funkcia na animaciu a jej nastavenie
   const playAnimation = () => {
     mixer = new THREE.AnimationMixer(scene);
