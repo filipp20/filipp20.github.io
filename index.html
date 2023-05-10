@@ -56,8 +56,22 @@
       const playButton = document.getElementById('playButton');
       const pauseButton = document.getElementById('pauseButton');
       const fasterButton = document.getElementById('fasterButton');
-      const slowerButton = document.getElementById('slowerButton');
+      const slowerButton = document.getElementById('slowerButton');     
       
+ 
+         // rýchlosť animácie
+         let speed = 1;
+
+// funkcia pre zrýchlenie animácie
+function speedUp() {
+  action.timeScale += 0.1;
+}
+
+// funkcia pre spomalenie animácie
+function speedDown() {
+ action.timeScale -= 0.1;
+}
+      // funkcia na animaciu a jej nastavenie
   const playAnimation = () => {
   mixer = new THREE.AnimationMixer(scene);
    mixer.updateTime = 0.5
@@ -102,21 +116,7 @@
         }
       });
 
-         // rýchlosť animácie
-         let speed = 1;
-
-// funkcia pre zrýchlenie animácie
-function speedUp() {
-  speed += 0.1;
-  animation.timeScale = speed;
-}
-
-// funkcia pre spomalenie animácie
-function speedDown() {
-  speed -= 0.1;
-  speed = Math.max(speed, 0.1);
-  animation.timeScale = speed;
-}
+  
 
  // priradenie funkcií na kliknutie tlačidiel
  fasterButton.addEventListener('click', speedUp);
