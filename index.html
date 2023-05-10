@@ -73,7 +73,7 @@
 
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
-      loader.load('assets/hlava_test2.gltf', function (gltf) {
+      loader.load('assets/hlava_test.gltf', function (gltf) {
         scene.add(gltf.scene);
 
         // ziskanie animacie z modelu
@@ -99,16 +99,7 @@
             break;
         }
       });
-      // stlačenie tlačidla Play/Pause
-     pauseButton.addEventListener('click', function() {
-     if (action.paused) {
-      action.play();
-      pauseButton.textContent = 'Pause';
-  }   else {
-      action.paused = true;
-      pauseButton.textContent = 'Play';
-  }
-});
+     
 
       // render
       function animate() {
