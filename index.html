@@ -57,8 +57,6 @@
   const playAnimation = () => {
   mixer = new THREE.AnimationMixer(scene);
   const animation = mixer.clipAction(scene.animations[1]);
-  const duration = 10; 
-  animation.setDuration(duration);
   const timeScale = 0.5; 
   animation.setLoop(THREE.LoopOnce);
   animation.setEffectiveTimeScale(timeScale); 
