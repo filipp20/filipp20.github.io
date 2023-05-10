@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>3D Model Hlavy MSAP  </title>
+    <title>3D Model Hlavy MSAP 1 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <style>
@@ -31,10 +31,7 @@
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
-      // animacia
-      mixer = new THREE.AnimationMixer(scene);
-      const animation = mixer.clipAction(scene.animations[1]);
-      const timeScale = 1;
+    
       
       // scena
       const scene = new THREE.Scene();
@@ -54,6 +51,10 @@
       controls.dampingFactor = 0.1;
       controls.rotateSpeed = 0.5;
       
+      // animacia
+      mixer = new THREE.AnimationMixer(scene);
+      const animation = mixer.clipAction(scene.animations[1]);
+      const timeScale = 1;
       // animácia
       let mixer;
       const clock = new THREE.Clock();
