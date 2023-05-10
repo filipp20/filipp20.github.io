@@ -80,15 +80,15 @@
         scene.animations = gltf.animations;
 
         // pridaj animaciu do sceny
-        const tick = () => {
-          const elapsedTime = clock.getElapsedTime();
+        const animate = () => {
+          const elapsedTime = clock.getDelta();
           if (mixer) {
             mixer.update(elapsedTime);
           }
           renderer.render(scene, camera);
-          window.requestAnimationFrame(tick);
+          window.requestAnimationFrame(animate);
         };
-        tick();
+        animate();
       });
 
       // stlacenie tlacidla
