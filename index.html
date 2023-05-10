@@ -57,9 +57,8 @@
      const playAnimation = () => {
      mixer = new THREE.AnimationMixer(scene);
      const animation = mixer.clipAction(scene.animations[1]);
-     const duration = 10; // set the duration to 10 seconds
-     animation.setDuration(duration); // update the duration of the animation
-     const timeScale = 0.3; // slower animation speed
+     const duration = 10;
+     animation.setDuration(duration);
      animation.setLoop(THREE.LoopOnce);
      animation.play();
 };
