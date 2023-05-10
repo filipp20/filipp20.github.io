@@ -3,7 +3,7 @@
   <head>
     <title>3D Model Hlavy MSAP  </title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <style>
       body {
         margin: 0;
@@ -45,7 +45,7 @@
       controls.enableDamping = true;
       controls.minDistance = 1.8; 
       controls.maxDistance = 15; 
-      controls.dampingFactor = 0.03;
+      controls.dampingFactor = 0.1;
       controls.rotateSpeed = 0.5;
       
       // animácia
@@ -56,9 +56,12 @@
       
   const playAnimation = () => {
   mixer = new THREE.AnimationMixer(scene);
+   mixer.timeScale = 1.0;
+   mixer.updateTime = 0.016
   const animation = mixer.clipAction(scene.animations[1]);
-  const timeScale = 0.5; 
+  const timeScale = 0.1; 
   animation.setLoop(THREE.LoopOnce);
+  animation.setInterpolation(THREE.InterpolateSmooth)
   animation.setEffectiveTimeScale(timeScale); 
   animation.play();
 };
