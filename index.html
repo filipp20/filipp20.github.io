@@ -51,10 +51,7 @@
       controls.dampingFactor = 0.1;
       controls.rotateSpeed = 0.5;
       
-      // animacia
-      mixer = new THREE.AnimationMixer(scene);
-      const animation = mixer.clipAction(scene.animations[1]);
-      const timeScale = 1;
+      
       // animácia
       let mixer;
       const clock = new THREE.Clock();
@@ -62,7 +59,10 @@
       const pauseButton = document.getElementById('pauseButton');
       const fasterButton = document.getElementById('fasterButton');
       const slowerButton = document.getElementById('slowerButton');     
-      
+      // animacia
+      mixer = new THREE.AnimationMixer(scene);
+      const animation = mixer.clipAction(scene.animations[1]);
+      const timeScale = 1;
  
        
 
