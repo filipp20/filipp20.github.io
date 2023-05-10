@@ -78,12 +78,14 @@
 
      // funkcia pre zrýchlenie animácie
      function speedUp() {
+       const timeScale = 1;
       timeScale += 0.1;
       animation.setEffectiveTimeScale(timeScale); 
              }
 
 // funkcia pre spomalenie animácie
 function speedDown() {
+      const timeScale = 1;
       timeScale -= 0.1;
       animation.setEffectiveTimeScale(timeScale); 
         }
