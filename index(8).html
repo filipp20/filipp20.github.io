@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>3D Model Hlavy MSAP  </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: white; 
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <button id="fasterButton">Zrychlit</button>
+    <button id="slowerButton">Spomalit</button>
+    <script src="https://cdn.jsdelivr.net/npm/three"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script> <!-- OrbitControls -->
+    <script>
+      // render
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // scena
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xffffff);      
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.set(-90, 0, 3);
+
+      // svetlo
+      const light = new THREE.AmbientLight(0xffffff, 1.5); 
+      scene.add(light);
+
+      // pohyb
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.minDistance = 1.8; 
+      controls.maxDistance = 15; 
+      controls.dampingFactor = 0.1;
+      controls.rotateSpeed = 0.5;
+      
+      // animácia
+      let mixer;
+      const clock = new THREE.Clock();
+      const playButton = document.getElementById('playButton');
+      const pauseButton = document.getElementById('pauseButton');
+      const fasterButton = document.getElementById('fasterButton');
+      const slowerButton = document.getElementById('slowerButton');     
+      
+ 
+       
+
+
+      // funkcia na animaciu a jej nastavenie
+  const playAnimation = () => {
+  mixer = new THREE.AnimationMixer(scene);
+   mixer.updateTime = 0.5
+   const animation = mixer.clipAction(scene.animations[1]);
+   const timeScale = 1; 
+   animation.setEffectiveTimeScale(timeScale); 
+   animation.play();
+};
+
+      const pauseAnimation = () => {
+        mixer.stopAllAction();
+      };
+
+     // event listener pre zrýchlenie
+      fasterButton.addEventListener("click", () => {
+      action.timeScale += 0.1;
+    });
+
+    // event listener pre spomalenie
+      slowerButton.addEventListener("click", () => {
+      action.timeScale -= 0.1;
+    });
+
+      // nacitanie modelu
+      const loader = new THREE.GLTFLoader();
+      loader.load('assets/hlava_test.gltf', function (gltf) {
+        scene.add(gltf.scene);
+
+        // ziskanie animacie z modelu
+        scene.animations = gltf.animations;
+
+        // pridaj animaciu do sceny
+        const animate = () => {
+          const elapsedTime = clock.getDelta();
+          if (mixer) {
+            mixer.update(elapsedTime);
+          }
+          renderer.render(scene, camera);
+          window.requestAnimationFrame(animate);
+        };
+        animate();
+      });
+
+      // stlacenie tlacidla
+      window.addEventListener('keydown', function (event) {
+        switch (event.code) {
+          case 'Space':
+            controls.autoRotate = !controls.autoRotate;
+            break;
+        }
+      });
+
+  
+
+ // priradenie funkcií na kliknutie tlačidiel
+ playButton.addEventListener('click', playAnimation);
+ pauseButton.addEventListener('click', pauseAnimation);
+
+     
+
+      // render
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+}
+animate();
+       </script>
+  </body>
+</html>
