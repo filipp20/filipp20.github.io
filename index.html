@@ -54,16 +54,15 @@
       const playButton = document.getElementById('playButton');
       const pauseButton = document.getElementById('pauseButton');
 
-      const playAnimation = () => {
-        mixer = new THREE.AnimationMixer(scene);
-        const animation = mixer.clipAction(scene.animations[1]);
-    const duration = 10; // predĺženie doby prehrávania animácie na 10 sekúnd
-    const timeScale = 0.3; // pomalšia rýchlosť prehrávania animácie
-        animation.setLoop(THREE.LoopOnce);
-
-        animation.play();
-        
-      };
+     const playAnimation = () => {
+     mixer = new THREE.AnimationMixer(scene);
+     const animation = mixer.clipAction(scene.animations[1]);
+     const duration = 10; // set the duration to 10 seconds
+     animation.setDuration(duration); // update the duration of the animation
+     const timeScale = 0.3; // slower animation speed
+     animation.setLoop(THREE.LoopOnce);
+     animation.play();
+};
 
       const pauseAnimation = () => {
         mixer.stopAllAction();
