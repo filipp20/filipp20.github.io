@@ -70,16 +70,13 @@
 
       // funkcia na animaciu a jej nastavenie
   const playAnimation = () => {
+    mixer = new THREE.AnimationMixer(scene);
+    const animation = mixer.clipAction(scene.animations[1]);
+    const timeScale = 1;
    mixer.updateTime = 0.5
    animation.setEffectiveTimeScale(timeScale); 
    animation.play();
-};
-
-      const pauseAnimation = () => {
-        mixer.stopAllAction();
-      };
-
-     // event listener pre zrýchlenie
+    // event listener pre zrýchlenie
       fasterButton.addEventListener("click", () => {
       action.timeScale += 0.1;
     });
@@ -88,6 +85,11 @@
       slowerButton.addEventListener("click", () => {
       action.timeScale -= 0.1;
     });
+};
+
+      const pauseAnimation = () => {
+        mixer.stopAllAction();
+      };
 
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
