@@ -36,7 +36,7 @@
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffffff);      
       const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-      camera.position.set(-90, 0, 3);
+      camera.position.set(-180, 0, 3);
 
       // svetlo
       const light = new THREE.AmbientLight(0xffffff, 1.5); 
@@ -67,9 +67,8 @@
   mixer = new THREE.AnimationMixer(scene);
    mixer.updateTime = 0.5
    const animation = mixer.clipAction(scene.animations[1]);
-   const timeScale = 1; 
-   animation.setEffectiveTimeScale(timeScale); 
-   animation.play();
+   const action = animation.clipAction(clip);
+   action.play()
 };
 
       const pauseAnimation = () => {
