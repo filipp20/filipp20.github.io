@@ -67,8 +67,7 @@
         mixer.stopAllAction();
       };
 
-      playButton.addEventListener('click', playAnimation);
-      pauseButton.addEventListener('click', pauseAnimation);
+     
 
       // nacitanie modelu
       const loader = new THREE.GLTFLoader();
@@ -98,6 +97,36 @@
             break;
         }
       });
+      // vytvorenie tlačidiel pre zrýchlenie a spomalenie animácie
+         const fasterButton = document.createElement('button');
+         fasterButton.textContent = 'Zrýchliť';
+         document.body.appendChild(fasterButton);
+         const slowerButton = document.createElement('button');
+         slowerButton.textContent = 'Spomaliť';
+         document.body.appendChild(slowerButton);
+
+         // rýchlosť animácie
+         let speed = 1;
+
+// funkcia pre zrýchlenie animácie
+function speedUp() {
+  speed += 0.1;
+  animation.timeScale = speed;
+}
+
+// funkcia pre spomalenie animácie
+function speedDown() {
+  speed -= 0.1;
+  speed = Math.max(speed, 0.1);
+  animation.timeScale = speed;
+}
+
+ // priradenie funkcií na kliknutie tlačidiel
+ fasterButton.addEventListener('click', speedUp);
+ slowerButton.addEventListener('click', speedDown);
+ playButton.addEventListener('click', playAnimation);
+ pauseButton.addEventListener('click', pauseAnimation);
+
      
 
       // render
